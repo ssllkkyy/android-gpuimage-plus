@@ -17,11 +17,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import org.wysaid.camera.CameraInstance;
 import org.wysaid.myUtils.FileUtil;
 import org.wysaid.myUtils.ImageUtil;
+import org.wysaid.myUtils.MsgUtil;
 import org.wysaid.nativePort.CGEFrameRecorder;
 import org.wysaid.view.CameraRecordGLSurfaceView;
 
@@ -45,7 +45,7 @@ public class CameraDemoActivity extends ActionBarActivity {
         mCameraView.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(CameraDemoActivity.this, s, Toast.LENGTH_SHORT).show();
+                MsgUtil.toastMsg(CameraDemoActivity.this, s);
             }
         });
     }
@@ -68,7 +68,7 @@ public class CameraDemoActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
 
-            Toast.makeText(CameraDemoActivity.this, "Video recording module is not provided by now!", Toast.LENGTH_LONG).show();
+            MsgUtil.toastMsg(CameraDemoActivity.this, "Video recording module is not provided by now!");
 
 //            Button btn = (Button)v;
 //            isRecording = !isRecording;
@@ -168,7 +168,11 @@ public class CameraDemoActivity extends ActionBarActivity {
 
         for(int i = 0; i != MainActivity.effectConfigs.length; ++i) {
             MyButtons button = new MyButtons(this, MainActivity.effectConfigs[i]);
-            button.setText("特效" + i);
+            button.setAllCaps(false);
+            if(i == 0)
+                button.setText("None");
+            else
+                button.setText("Filter" + i);
             button.setOnClickListener(mFilterSwitchListener);
             layout.addView(button);
         }
@@ -209,7 +213,7 @@ public class CameraDemoActivity extends ActionBarActivity {
                         mCameraView.setMaskBitmap(mBmp, false, new CameraRecordGLSurfaceView.SetMaskBitmapCallback() {
                             @Override
                             public void setMaskOK(CGEFrameRecorder recorder) {
-                                //使mask上下翻转
+                                //flip mask
                                 if(mCameraView.isUsingMask())
                                     recorder.setMaskFlipScale(1.0f, -1.0f);
                             }
@@ -250,6 +254,7 @@ public class CameraDemoActivity extends ActionBarActivity {
         });
 
         mCameraView.presetRecordingSize(480, 640);
+//        mCameraView.presetRecordingSize(720, 1280);
         mCameraView.setZOrderOnTop(false);
         mCameraView.setZOrderMediaOverlay(true);
 
@@ -322,11 +327,12 @@ public class CameraDemoActivity extends ActionBarActivity {
         bgBtn.setOnClickListener(new View.OnClickListener() {
             boolean useBackground = false;
             Bitmap backgroundBmp;
+
             @Override
             public void onClick(View v) {
                 useBackground = !useBackground;
-                if(useBackground) {
-                    if(backgroundBmp == null)
+                if (useBackground) {
+                    if (backgroundBmp == null)
                         backgroundBmp = BitmapFactory.decodeResource(getResources(), R.drawable.bgview);
                     mCameraView.setBackgroundImage(backgroundBmp, false, new CameraRecordGLSurfaceView.SetBackgroundImageCallback() {
                         @Override
@@ -355,25 +361,6 @@ public class CameraDemoActivity extends ActionBarActivity {
             }
         });
 
-        Button faceDetectionBtn = (Button)findViewById(R.id.faceDetectionBtn);
-        faceDetectionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CameraDemoActivity.this, "FaceDetection module is not provided by now!", Toast.LENGTH_LONG).show();
-//                Button self = (Button) v;
-//                if (mCameraView.isDetectingFace()) {
-//                    mCameraView.stopDetectingFace();
-//                    self.setText("停止检测");
-//                } else {
-//                    if (mCameraView.startDetectingFaceWithDefaultFilter()) {
-//                        self.setText("正在检测");
-//                    } else {
-//                        self.setText("启动失败!");
-//                    }
-//                }
-            }
-        });
-
         mCameraView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, final MotionEvent event) {
@@ -388,9 +375,9 @@ public class CameraDemoActivity extends ActionBarActivity {
                             @Override
                             public void onAutoFocus(boolean success, Camera camera) {
                                 if (success) {
-                                    Log.e(LOG_TAG, String.format("手动对焦成功， 位置: %g, %g", focusX, focusY));
+                                    Log.e(LOG_TAG, String.format("Focus OK, pos: %g, %g", focusX, focusY));
                                 } else {
-                                    Log.e(LOG_TAG, String.format("手动对焦失败， 位置: %g, %g", focusX, focusY));
+                                    Log.e(LOG_TAG, String.format("Focus failed, pos: %g, %g", focusX, focusY));
                                     mCameraView.cameraInstance().setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
                                 }
                             }

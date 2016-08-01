@@ -27,6 +27,13 @@ public class MainActivity extends ActionBarActivity {
 
     public static final String effectConfigs[] = {
             "",
+            "@beautify face 1 480 640", //美颜效果
+            "@adjust lut edgy_amber.png",
+            "@adjust lut filmstock.png",
+            "@adjust lut foggy_night.png",
+            "@adjust lut late_sunset.png",
+            "@adjust lut soft_warming.png",
+            "@adjust lut wildbird.png",
             "@beautify bilateral 10 4 1 @style haze -0.5 -0.5 1 1 1 @curve RGB(0, 0)(94, 20)(160, 168)(255, 255) @curve R(0, 0)(129, 119)(255, 255)B(0, 0)(135, 151)(255, 255)RGB(0, 0)(146, 116)(255, 255)",
             "#unpack @blur lerp 0.75", //可调节模糊强度
             "@blur lerp 1", //可调节混合强度
@@ -129,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
             "@adjust hsl 0.02 -0.31 -0.17 @curve R(0, 28)(23, 45)(117, 148)(135, 162)G(0, 8)(131, 152)(255, 255)B(0, 17)(58, 80)(132, 131)(127, 131)(255, 225)"
     };
 
-    CGENativeLibrary.LoadImageCallback loadImageCallback = new CGENativeLibrary.LoadImageCallback() {
+    public CGENativeLibrary.LoadImageCallback loadImageCallback = new CGENativeLibrary.LoadImageCallback() {
 
         //注意， 这里回传的name不包含任何路径名， 仅为具体的图片文件名如 1.jpg
         @Override

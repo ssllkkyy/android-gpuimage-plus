@@ -109,29 +109,29 @@ public class CGEFrameRecorder extends CGEFrameRenderer {
 
     /////////////////      private         ///////////////////////
 
-//    private native ByteBuffer nativeCreateRecorder();
+//    private native long nativeCreateRecorder();
 
     //人脸美化相关
 
-//    private native void nativeSetTrackedFilter(ByteBuffer holder, String config);
-//    private native void nativeSetTrackedFilterIntensity(ByteBuffer holder, float intensity);
-//    private native void nativeSetFaceArea(ByteBuffer holder, float x, float y, float gx, float gy);
+//    private native void nativeSetTrackedFilter(long holder, String config);
+//    private native void nativeSetTrackedFilterIntensity(long holder, float intensity);
+//    private native void nativeSetFaceArea(long holder, float x, float y, float gx, float gy);
 
     /////////////////视频录制相关////////////////////
-//    private native boolean nativeStartRecording(ByteBuffer holder, int fps, String filename);
-//    private native boolean nativeIsRecordingStarted(ByteBuffer holder);
-//    private native boolean nativeEndRecording(ByteBuffer holder, boolean shouldSave);
-//    private native void nativePauseRecording(ByteBuffer holder);
-//    private native boolean nativeIsRecordingPaused(ByteBuffer holder);
-//    private native boolean nativeResumeRecording(ByteBuffer holder);
-//    private native double nativeGetTimestamp(ByteBuffer holder);
+//    private native boolean nativeStartRecording(long holder, int fps, String filename);
+//    private native boolean nativeIsRecordingStarted(long holder);
+//    private native boolean nativeEndRecording(long holder, boolean shouldSave);
+//    private native void nativePauseRecording(long holder);
+//    private native boolean nativeIsRecordingPaused(long holder);
+//    private native boolean nativeResumeRecording(long holder);
+//    private native double nativeGetTimestamp(long holder);
 //
-//    private native double nativeGetVideoStreamtime(ByteBuffer holder);
-//    private native double nativeGetAudioStreamtime(ByteBuffer holder);
+//    private native double nativeGetVideoStreamtime(long holder);
+//    private native double nativeGetAudioStreamtime(long holder);
 //
-//    private native void nativeSetTempDir(ByteBuffer holder, String dir);
+//    private native void nativeSetTempDir(long holder, String dir);
 //
-//    private native void nativeRecordImageFrame(ByteBuffer holder);
-//    private native void nativeRecordAudioFrame(ByteBuffer holder, ShortBuffer audioBuffer, int bufferLen);
+//    private native void nativeRecordImageFrame(long holder);
+//    private native void nativeRecordAudioFrame(long holder, ShortBuffer audioBuffer, int bufferLen);
 
 }

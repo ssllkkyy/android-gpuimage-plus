@@ -68,8 +68,6 @@ public class VideoPlayerGLSurfaceView extends GLSurfaceView implements GLSurface
 
     private MediaPlayer mPlayer;
 
-    private Context mContext;
-
     private Uri mVideoUri;
 
     public interface PlayerInitializeCallback {
@@ -243,7 +241,6 @@ public class VideoPlayerGLSurfaceView extends GLSurfaceView implements GLSurface
         super(context, attrs);
 
         Log.i(LOG_TAG, "MyGLSurfaceView Construct...");
-        mContext = context;
 
         setEGLContextClientVersion(2);
         setEGLConfigChooser(8, 8, 8, 8, 8, 0);
@@ -354,6 +351,8 @@ public class VideoPlayerGLSurfaceView extends GLSurfaceView implements GLSurface
         mSurfaceTexture.getTransformMatrix(mTransformMatrix);
         mFrameRenderer.update(mVideoTextureID, mTransformMatrix);
 
+        mFrameRenderer.runProc();
+
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
@@ -439,7 +438,7 @@ public class VideoPlayerGLSurfaceView extends GLSurfaceView implements GLSurface
         }
 
         try {
-            mPlayer.setDataSource(mContext, mVideoUri);
+            mPlayer.setDataSource(getContext(), mVideoUri);
             mPlayer.setSurface(new Surface(mSurfaceTexture));
 
         } catch (Exception e) {
